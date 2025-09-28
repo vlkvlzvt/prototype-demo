@@ -2,24 +2,89 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Прототип демо</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <style>
+    :root { /* на iOS краще 100dvh */
+      --vh: 100dvh;
+      background: #000; /* змінюй під свій фон */
+    }
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      overscroll-behavior: none;
+    }
+    .wrap {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: var(--vh);
+      display: grid;
     }
     iframe {
       width: 100%;
       height: 100%;
-      border: none;
+      border: 0;
+      display: block;
+    }
+    /* непомітна плаваюча кнопка як план Б для десктопів */
+    .fs-btn {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      padding: 8px 10px;
+      background: rgba(0,0,0,.6);
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+      font: 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      display: none; /* покажемо лише якщо API доступне */
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <iframe
-    src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Fv0oMwyUe7TrFYHj1FwTTsU%2FUntitled%3Fpage-id%3D0%253A1%26node-id%3D17-479%26p%3Df%26viewport%3D159%252C253%252C0.07%26t%3DwKa5wKlp5blGoOfH-1%26scaling%3Dscale-down%26content-scaling%3Dfixed%26starting-point-node-id%3D17%253A479"
-    allowfullscreen>
-  </iframe>
+  <div class="wrap">
+    <iframe
+      src="https://www.figma.com/embed?embed_host=share&hide-ui=1&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Fv0oMwyUe7TrFYHj1FwTTsU%2FUntitled%3Fpage-id%3D0%253A1%26node-id%3D17-479%26p%3Df%26viewport%3D159%252C253%252C0.07%26t%3DwKa5wKlp5blGoOfH-1%26scaling%3Dscale-down%26content-scaling%3Dfixed%26starting-point-node-id%3D17%253A479"
+      allowfullscreen
+      allow="fullscreen; autoplay; clipboard-read; clipboard-write">
+    </iframe>
+  </div>
+
+  <button class="fs-btn" id="fsBtn">Повний екран</button>
+
+  <script>
+    // 100dvh fallback для старих браузерів
+    const setVH = () => document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+    setVH(); addEventListener('resize', setVH);
+
+    // PWA service worker (не обов'язково, але корисно)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    }
+
+    // Кнопка повного екрану для десктопів
+    const fsBtn = document.getElementById('fsBtn');
+    const canFS = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+    if (canFS) {
+      fsBtn.style.display = 'inline-block';
+      fsBtn.addEventListener('click', () => {
+        const el = document.documentElement;
+        (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.mozRequestFullScreen).call(el);
+      });
+    }
+  </script>
 </body>
 </html>

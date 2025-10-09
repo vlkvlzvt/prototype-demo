@@ -13,19 +13,40 @@
       overflow: hidden;
       background: #fff;
     }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
     iframe {
-      position: fixed;
+      position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       border: none;
     }
+
+    /* Маска для приховування нижньої панелі Figma */
+    .mask {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px; /* можна збільшити, якщо панель вища */
+      background: #fff;
+      pointer-events: none; /* щоб не блокувала кліки */
+    }
   </style>
 </head>
 <body>
-  <iframe
-    src="https://www.figma.com/proto/v0oMwyUe7TrFYHj1FwTTsU/Untitled?page-id=0%3A1&node-id=211-203&viewport=-357%2C-185%2C0.23&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=211%3A203&mode=present"
-    allowfullscreen>
-  </iframe>
+  <div class="wrapper">
+    <iframe
+      src="https://embed.figma.com/proto/v0oMwyUe7TrFYHj1FwTTsU/Untitled?page-id=0%3A1&node-id=211-203&viewport=-357%2C-185%2C0.23&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=211%3A203&embed-host=share"
+      allowfullscreen>
+    </iframe>
+    <div class="mask"></div>
+  </div>
 </body>
 </html>

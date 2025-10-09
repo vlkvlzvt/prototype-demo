@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Прототип Freeway</title>
+  <title>Freeway Prototype</title>
   <style>
     html, body {
       margin: 0;
@@ -13,6 +13,7 @@
       overflow: hidden;
       background: #fff;
     }
+
     iframe {
       position: fixed;
       inset: 0;
@@ -20,12 +21,26 @@
       height: 100%;
       border: none;
     }
+
+    /* біла маска для приховування нижньої панелі Figma */
+    .mask {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: #fff;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
-  <iframe
-    src="https://www.figma.com/proto/v0oMwyUe7TrFYHj1FwTTsU/Freeway?page-id=0%3A1&node-id=211-203&viewport=-263%2C146%2C0.13&t=Do1IfwBfZvUH3no0-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=211%3A203&mode=present"
-    allowfullscreen>
-  </iframe>
+  <div style="position: relative; height: 100%; width: 100%;">
+    <iframe
+      src="https://embed.figma.com/proto/v0oMwyUe7TrFYHj1FwTTsU/Freeway?page-id=0%3A1&node-id=211-203&viewport=-263%2C146%2C0.13&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=211%3A203&embed-host=share"
+      allowfullscreen>
+    </iframe>
+    <div class="mask"></div>
+  </div>
 </body>
 </html>
